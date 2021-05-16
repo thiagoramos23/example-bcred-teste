@@ -8,27 +8,13 @@ defmodule Proposals.Core.Proposal do
   end
 
   def add_warranty(proposal, warranty_fields) do
-
-  end
-
-  def updated_warranty(proposal, warranty_fields) do
-
+    warranty = Warranty.new(warranty_fields)
+    %{proposal | warranties: [warranty | proposal.warranties]}
   end
 
   def add_proponent(proposal, proponent_fields) do
-
-  end
-
-  def update_proponent(proposal, proponent_fields) do
-
-  end
-
-  def remove_warranty(proposal_id, warranty_id) do
-
-  end
-
-  def remove_proponent(proposal_id, proponent_id) do
-
+    proponent = Proponent.new(proponent_fields)
+    %{proposal | proponents: [proponent | proposal.proponents]}
   end
 
   def valid?(proposal) do
