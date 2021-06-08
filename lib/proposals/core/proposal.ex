@@ -23,7 +23,7 @@ defmodule Proposals.Core.Proposal do
     |> evaluate(&valid_loan_value?/1)
     |> evaluate(&valid_number_of_monthly_installments?/1)
     |> evaluate(&has_at_least_two_proponents?/1)
-    |> evaluate(&has_exactly_one_proponent?/1)
+    |> evaluate(&has_exactly_one_main_proponent?/1)
     |> evaluate(&has_all_proponents_older_than_eighteen?/1)
     |> evaluate(&has_monthly_income_accordingly_to_the_age?/1)
     |> evaluate(&has_warranty?/1)
@@ -48,7 +48,7 @@ defmodule Proposals.Core.Proposal do
     Enum.count(proposal.proponents) >= 2
   end
 
-  defp has_exactly_one_proponent?(proposal) do
+  defp has_exactly_one_main_proponent?(proposal) do
     number_of_main_proponents = 
       proposal.proponents
       |> Enum.count(&(&1.main == true))

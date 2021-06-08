@@ -3,37 +3,31 @@ defmodule Proposals do
   Documentation for `Proposals`.
   """
 
-  @doc """
+  @type valid_proposals :: [String.t()]
+  @type event_string    :: String.t()
 
-  ## Examples
-
-    iex> Proposals.valid_proposal?(events)
-    true 
-
-  """
+  @spec valid_proposals(event_string()) :: valid_proposals()
   def valid_proposals(events) do
     proposals = []
-    valid_proposals = []
-    event_list = 
-      events 
-      |> String.split("\n")
-      |> Enum.reject(&(&1 == ""))
-
+    event_list = handle_events(events)
     proposals = parse_proposals(proposals, event_list)
-    get_valid_proposals(valid_proposals, proposals)
+
+    Enum.reduce(proposals, [], &get_valid_proposals(&1, &2))
+    |> Enum.map(fn proposal -> proposal.id end)
   end
 
-  defp get_valid_proposals(valid_proposals, [head | tail]) do
-    case Proposals.Core.Proposal.valid?(head) do
+  defp get_valid_proposals(proposal, valid_proposals) do
+    case Proposals.Core.Proposal.valid?(proposal) do
       true ->
-        valid_proposals = [head | valid_proposals]
-        get_valid_proposals(valid_proposals, tail)
-
+        [proposal | valid_proposals]
       false ->
-        get_valid_proposals(valid_proposals, tail)
+        valid_proposals
     end
   end
-  defp get_valid_proposals(valid_proposals, []), do: valid_proposals
+
+  defp handle_events(events) do
+    Proposals.Handler.EventHandler.handle_events(events)
+  end
 
   defp parse_proposals(proposals, [head | tail]) do
     proposals = Proposals.Parser.EventParser.parse(head, proposals)
