@@ -13,7 +13,7 @@ defmodule Proposals.Core.ProponentTest do
   end
 
   test "new\1 creates a proposal" do
-    assert base_proposal = Proposals.Core.Proponent.new(@fields)
+    assert base_proponent == Proposals.Core.Proponent.new(@fields)
   end
 
   test "valid?\1 valid if proponent is older than 18 years old" do
