@@ -6,13 +6,11 @@ defmodule Proposals.Handler.EventHandlerTest do
   test "handle_events/1 remove duplicated event" do
     events = EventHandler.handle_events(duplicated_events())
     assert length(events) == 5
-    assert length(Enum.filter(events, &(&1.id == "c2d06c4f-e1dc-4b2a-af61-ba15bc6d8610"))) == 1 
+    assert length(Enum.filter(events, &(&1.id == "c2d06c4f-e1dc-4b2a-af61-ba15bc6d8610"))) == 1
   end
 
   test "handle_events/1 remove the oldest event that comes after the newest event of same schema/action" do
     events = EventHandler.handle_events(old_event_with_same_schema_action())
-
-    require IEx; IEx.pry
     assert length(events) == 11
     refute Enum.any?(events, &(&1.id == "716de46f-9cc0-40be-b665-b0d47841db4e")) == true
   end
