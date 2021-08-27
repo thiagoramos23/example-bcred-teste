@@ -6,6 +6,8 @@ https://github.com/bcredi/teste-backends
 The first thing you need to do is to clone this repository which you can do by copying this command:
 `git clone git@github.com:thiagoramos23/example-bcred-teste.git`
 
+You can also fork the project which is something I really think you should consider to do if you want to make some changes in the project and push to github.
+
 After that you will need to do the following:
 - mix deps.get
 - mix deps.compile
